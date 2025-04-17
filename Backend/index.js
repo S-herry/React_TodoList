@@ -1,5 +1,4 @@
 const express = require("express");
-const fs = require("fs");
 const app = express();
 const cors = require("cors"); // 引入 CORS 中介軟體 允取所有來源
 const PORT = 5001;
