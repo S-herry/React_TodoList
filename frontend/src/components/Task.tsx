@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PencilIcon from "./svg/PencilIcon";
+import PencilIcon from "./PencilIcon";
 import SettingModel from "./model/SettingModel";
 import url from "../data/url.json";
 import { ColorGroup } from "./type/ColorGroup";
@@ -17,9 +17,9 @@ function Task({
   const DELETE = url.host + url.task.DELETE.replace("{id}", `${id}`);
   const PUT = url.host + url.task.PUT.replace("{id}", `${id}`);
   const [currentStatus, setCurrentStatus] = useState(status);
-  const [changeContent, setChangeContent] = useState(false);
-  const [currentContent, setCurrentContent] = useState(content);
+  const [isChangeContent, setChangeContent] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentContent, setCurrentContent] = useState(content);
   function onOpenModal() {
     setIsModalOpen(true);
   }
@@ -27,7 +27,7 @@ function Task({
     setIsModalOpen(false);
   }
 
-  function handleStatusChange(status: string) {
+  function onStatusChange(status: string) {
     if (status.trim() == "") {
       return;
     }
@@ -49,8 +49,8 @@ function Task({
     if (currentContent.trim() == "") {
       return;
     }
-    setChangeContent(!changeContent);
-    if (changeContent) {
+    setChangeContent(!isChangeContent);
+    if (isChangeContent) {
       onStatusRequest({
         url: PUT,
         method: "PUT",
@@ -77,10 +77,13 @@ function Task({
           {statuses.map((status) => (
             <button
               key={status.id}
-              onClick={() => handleStatusChange(status.status)}
+              onClick={() => onStatusChange(status.status)}
               className={`text-sm px-2 py-1 rounded-md border ${
                 currentStatus === status.status
-                  ? "bg-blue-600 text-white"
+                  ? ` ${
+                      ColorGroup[status.color as keyof typeof ColorGroup] ||
+                      "bg-gray-200"
+                    } text-white`
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >
@@ -89,19 +92,24 @@ function Task({
           ))}
         </div>
       </SettingModel>
+
       <input
         type="text"
         value={currentContent}
         onChange={(e) => setCurrentContent(e.target.value)}
         name="content"
         id="content"
-        className={`my-auto px-3 mx-2 w-full ${changeContent ? "border" : ""}`} // border
-        disabled={!changeContent}
+        className={`my-auto px-3 mx-2 w-full ${
+          isChangeContent ? "border" : ""
+        }`} // border
+        disabled={!isChangeContent}
       />
 
       <PencilIcon onClick={onPutTask} />
       <button
-        onClick={() => onTaskRequest({ url: DELETE, method: "DELETE" })}
+        onClick={() => {
+          onTaskRequest({ url: DELETE, method: "DELETE" });
+        }}
         className="ms-auto hover:text-red-500 cursor-pointer p-3"
       >
         X

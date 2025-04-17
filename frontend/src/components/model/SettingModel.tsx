@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import CloseButton from "../CloseButton";
 
 function SettingModel({
   label,
@@ -27,21 +28,14 @@ function SettingModel({
       {/* Modal */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50  flex items-center justify-center z-50"
+          className="fixed  inset-0 bg-black/50  flex items-center justify-center z-50"
           onClick={onCloseModal}
         >
           <div
-            className="bg-white p-6 rounded-lg w-1/3 relative"
-            onClick={(e) => e.stopPropagation()} // 防止點擊 modal 內部關閉
+            className="bg-white p-6 rounded-lg w-1/3 max-md:w-2/3 relative"
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Close button (X) */}
-            <button
-              onClick={onCloseModal}
-              className="absolute cursor-pointer top-2 right-2 text-xl font-bold text-black"
-            >
-              X
-            </button>
-
+            <CloseButton onClick={onCloseModal} />
             {children}
           </div>
         </div>

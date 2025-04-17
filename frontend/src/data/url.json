@@ -4,7 +4,8 @@
     "GET": "/api/task/",
     "POST": "/api/task/",
     "DELETE": "/api/task/{id}",
-    "PUT": "/api/task/{id}"
+    "PUT": "/api/task/{id}",
+    "DELETE_Status": "/api/taskstatus/{status}"
   },
   "status": {
     "GET": "/api/status",

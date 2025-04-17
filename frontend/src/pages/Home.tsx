@@ -10,7 +10,7 @@ import { TaskFace } from "../components/type/Task";
 import { StatusFace } from "../components/type/Status";
 import StatsInfo from "../components/home/StatsInfo";
 import TaskList from "../components/home/TaskList";
-
+import MixinModel from "../components/model/MixinModel";
 const TASK_GET_URL = url.host + url.task.GET;
 const TASK_STATUS_GET_URL = url.host + url.status.GET;
 const TASK_POST_URL = url.host + url.task.POST;
@@ -49,6 +49,18 @@ function Home() {
     } else if (Array.isArray(taskList)) {
       setTasks(taskList);
     }
+
+    if (
+      typeof taskList === "object" &&
+      "message" in taskList &&
+      typeof taskList.message === "string"
+    ) {
+      MixinModel({
+        icon: "success",
+        title: taskList.message,
+        timer: 2000,
+      });
+    }
   }, [taskList]);
 
   useEffect(() => {
@@ -60,6 +72,18 @@ function Home() {
       setStatuses(taskStatus.statusList as StatusFace[]);
     } else if (Array.isArray(taskStatus)) {
       setStatuses(taskStatus);
+    }
+
+    if (
+      typeof taskStatus === "object" &&
+      "message" in taskStatus &&
+      typeof taskStatus.message === "string"
+    ) {
+      MixinModel({
+        icon: "success",
+        title: taskStatus.message,
+        timer: 2000,
+      });
     }
   }, [taskStatus]);
 
@@ -116,6 +140,7 @@ function Home() {
           onSetStatusFilter={onSetStatusFilter}
           status={statuses}
           onStatusRequest={onTaskStatusListRequest}
+          onTaskListRequest={onTaskListRequest}
         />
 
         <hr className={HR_CLASS} />

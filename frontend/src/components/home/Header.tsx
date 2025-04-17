@@ -6,12 +6,14 @@ import { StatusFace } from "../type/Status";
 import StatusFilterDropdown from "./header/StatusFilterDropdown";
 import StatusTagsList from "./header/StatusTagsList";
 import ColorPicker from "./header/ColorPicker";
+import IsConfirm from "../model/IsConfirm";
 
 interface HeaderProps {
   status: StatusFace[];
   statusFilter: string;
   onSetStatusFilter: (props: { val: string }) => void;
   onStatusRequest: (props: RequestProps) => void;
+  onTaskListRequest: (props: RequestProps) => void;
 }
 
 function Header({
@@ -19,11 +21,14 @@ function Header({
   statusFilter,
   onSetStatusFilter,
   onStatusRequest,
+  onTaskListRequest,
 }: HeaderProps) {
   const [newStatus, setNewStatus] = useState({
     status: "",
-    color: "",
-  }); // 用來存儲新增狀態的 input
+    color: "red",
+  });
+
+  // 用來存儲新增狀態的 input
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function onOpenModal() {
@@ -40,17 +45,24 @@ function Header({
     }));
   }
   function onAddStatus() {
-    const path = url.host + url.status.GET;
-    if (newStatus.status.trim()) {
-      onStatusRequest({
-        url: path,
-        method: "POST",
-        data: newStatus,
-      });
+    IsConfirm({
+      title: "是否新增狀態",
+      icon: "question",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const path = url.host + url.status.GET;
+        if (newStatus.status.trim()) {
+          onStatusRequest({
+            url: path,
+            method: "POST",
+            data: newStatus,
+          });
 
-      setNewStatus({ status: "", color: "" });
-      onCloseModal();
-    }
+          setNewStatus({ status: "", color: "" });
+          onCloseModal();
+        }
+      }
+    });
   }
 
   return (
@@ -83,7 +95,11 @@ function Header({
               Current Status
             </label>
             <div className="flex gap-3 flex-wrap">
-              <StatusTagsList status={status} />
+              <StatusTagsList
+                status={status}
+                onStatusRequest={onStatusRequest}
+                onSetStatusFilter={onTaskListRequest}
+              />
             </div>
           </div>
 
@@ -111,7 +127,7 @@ function Header({
               Select Color
             </label>
             <section
-              className="flex gap-4"
+              className="flex gap-4 flex-wrap"
               onChange={(e) => {
                 const target = e.target as HTMLInputElement;
                 if (target.name === "color") {

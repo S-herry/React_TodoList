@@ -25,7 +25,7 @@ router.put("/api/task/:id", (req, res) => {
   todoList[taskIndex].completed = completed ?? todoList[taskIndex].completed;
   fs.writeFileSync(filePath, JSON.stringify(todoList, null, 2));
   res.json({
-    message: "Data updated successfully",
+    message: "資料成功修改",
     newTask: todoList[taskIndex],
   });
 });
@@ -42,7 +42,7 @@ router.delete("/api/task/:id", (req, res) => {
   todoList.splice(taskIndex, 1);
   fs.writeFileSync(filePath, JSON.stringify(todoList, null, 2));
 
-  res.json({ message: "Data deleted successfully", todoList });
+  res.json({ message: "刪除資料成功", todoList });
 });
 
 // 新增資料
@@ -57,13 +57,15 @@ router.post("/api/task", (req, res) => {
   };
   todoList.push(newTask);
   fs.writeFileSync(filePath, JSON.stringify(todoList, null, 2));
-  res.json({ message: "Data created successfully", newTask });
+  res.json({ message: "資料新增成功", newTask });
 });
 
-// 刪除完成的資料
-router.get("/api/task/completed", (req, res) => {
+// 刪除該狀態的資料
+router.get("/api/taskstatus/:status", (req, res) => {
+  const { status } = req.params;
+
   const completedTasksExist = todoList.some(
-    (task) => task.completed === "completed"
+    (task) => task.completed === status
   );
 
   if (!completedTasksExist) {
@@ -72,11 +74,11 @@ router.get("/api/task/completed", (req, res) => {
       .json({ message: "No completed tasks found to delete" });
   }
 
-  todoList = todoList.filter((task) => task.completed !== "completed");
+  todoList = todoList.filter((task) => task.completed !== status);
   fs.writeFileSync(filePath, JSON.stringify(todoList, null, 2));
 
   res.json({
-    message: "All completed tasks deleted successfully",
+    message: `${status} 刪除`,
     todoList,
   });
 });
