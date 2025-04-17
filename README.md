@@ -66,31 +66,27 @@ npm run dev
 
 http://localhost:8080/
 
-# 🔐 環境變數說明
-
-如果有 .env 相關設定，請在此說明（如 API baseURL、金鑰等）
-
 # 📁 資料夾說明
 
-frontend/src/components React 元件
-frontend/src/hooks 自訂 hooks
-frontend/src/pages 頁面
-frontend/src/data 靜態資源
+- frontend/src/components React 元件
+- frontend/src/hooks 自訂 hooks
+- frontend/src/pages 頁面
+- frontend/src/data 靜態資源
 
-Backend/api 路由設定
-Backend/data json 資料庫
-Backend/index 設定 port 和主要後端內容
+- Backend/api 路由設定
+- Backend/data json 資料庫
+- Backend/index 設定 port 和主要後端內容
 
 # 🛠️ 使用技術
 
-Node.js：v20.16.0
-React：v19.0.0
-TypeScript：v5.7.2
-Tailwind CSS：v4.1.3
-React Router：v7.5.0
-sweetalert2:v11.19.1
+- Node.js：v20.16.0
+- React：v19.0.0
+- TypeScript：v5.7.2
+- Tailwind CSS：v4.1.3
+- React Router：v7.5.0
+- sweetalert2:v11.19.1
 
 # 📬 聯絡方式
 
-如需聯絡或合作，請透過：
+如需聯絡，請透過：
 📧 Email：hight7501@example.com
