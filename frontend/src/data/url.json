@@ -1,0 +1,14 @@
+{
+  "host": "http://localhost:5001",
+  "task": {
+    "GET": "/api/task/",
+    "POST": "/api/task/",
+    "DELETE": "/api/task/{id}",
+    "PUT": "/api/task/{id}"
+  },
+  "status": {
+    "GET": "/api/status",
+    "POST": "/api/status",
+    "DELETE": "/api/status/{id}"
+  }
+}

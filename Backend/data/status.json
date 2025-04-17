@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "status": "inProgress",
+    "color": "green"
+  },
+  {
+    "id": 2,
+    "status": "completed",
+    "color": "red"
+  },
+  {
+    "id": 3,
+    "status": "init",
+    "color": "red"
+  },
+  {
+    "id": 4,
+    "status": "actionssss",
+    "color": "green"
+  },
+  {
+    "id": 5,
+    "status": "bl",
+    "color": "blue"
+  }
+]
